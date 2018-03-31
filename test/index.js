@@ -26,6 +26,7 @@ describe('Chaos Axia Parser', function() {
          .toPromise()
 
       expect(result).to.have.property('id')
+      expect(result).to.have.property('type')
       expect(result.id).to.equal('紅魔_001sp')
       expect(result.image).to.equal('./images/card/ko001s.jpg')
    })
@@ -50,13 +51,14 @@ describe('Chaos Axia Parser', function() {
          .mergeMap(partition_expansion)
          .mergeMap(from)
          .mergeMap(parse_card)
+         .map(convert_to_dynamo_json)
          .reduce(
             (R,V) => {
                R.push(V)
                return R
             }, [])
+
          .toPromise()
-      console.log(result[0])
       expect(result).to.have.lengthOf(91)
    })
 })

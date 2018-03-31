@@ -5,6 +5,7 @@ exports.parse_card = data => {
    return create(observer => {
       let card_name = data.querySelector('tr:nth-child(1) > td#C2').textContent.trim()
       let card_number = data.querySelector('tr:nth-child(2) > td#C2').textContent.trim()
+      let type = data.querySelector('tr:nth-child(4) > td#C2').textContent.trim()
       let id = card_number.toLowerCase().replace('-','_')
       let image = `${base}/images/card/${data.querySelector('tr:nth-child(1) > td#C0 img').name}.jpg`
       let abilitiesCollection = data.querySelector('tr:nth-child(7) > td#C2').childNodes
@@ -18,6 +19,7 @@ exports.parse_card = data => {
          id,
          image,
          name:card_name,
+         type,
          number:card_number,
          abilities})
       
@@ -25,7 +27,7 @@ exports.parse_card = data => {
    })
 }
 
-exports.convert_to_dynamo_json = ({id,image,name,number,abilities}) => {
+exports.convert_to_dynamo_json = ({id,image,name,number,abilities, type}) => {
    return {
       id:{
          S:id
@@ -38,6 +40,9 @@ exports.convert_to_dynamo_json = ({id,image,name,number,abilities}) => {
       },
       number:{
          S:number
+      },
+      type:{
+         S:type
       },
       abilities: {
          SS:abilities
