@@ -1,6 +1,6 @@
 const { of, create, from } = require('rxjs').Observable
 const { JSDOM } = require('jsdom')
-const base = '.'
+const base = 'http://chaos.axia-info.com'
 exports.parse_card = data => {
    return create(observer => {
       let card_name = data.querySelector('tr:nth-child(1) > td#C2').textContent.trim()

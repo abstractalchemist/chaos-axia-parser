@@ -62,7 +62,7 @@ process_data('touhou_chaotic_mark_ESOD', '東方混沌符【紅魔篇】', '紅�
             console.timeEnd('PCB')
             process_data('touhou_chaotic_mark_PCB','東方混沌符【妖々篇】','妖々','./pcb.html')
                .subscribe(observer)
-         }, 1000)
+         }, 10000)
      })
   })
   .do(_ => console.log('processing of PCB complete'))
@@ -73,10 +73,21 @@ process_data('touhou_chaotic_mark_ESOD', '東方混沌符【紅魔篇】', '紅�
             console.timeEnd('IMP')
             process_data('touhou_chaotic_mark_IMP','東方混沌符【永夜篇】','永夜','./imp.html')
                .subscribe(observer)
-         }, 1000)
+         }, 10000)
       })
   })
   .do(_ => console.log('processing of IMP complete'))
+  .mergeMap( _ => {
+      return create(observer => {
+         console.time('set1')
+         setTimeout(_ => {
+            console.timeEnd('set1')
+            process_data('touhou_chaotic_mark_1_0_0', '東方混沌符 1.00','TP','./expo1.html')
+               .subscribe(observer)
+            }, 10000)
+      })
+  })
+  .do(_ => console.log('processing set 1 complete'))
   .subscribe(
       data => {},
       console.log.bind(console),
